@@ -39,7 +39,7 @@ http://127.0.0.1:5000
 .........
 
 
-# Disclamer 
+# Disclaimer 
 This Project intentionally contains vulunerabilities for educational purposes only.
 
 # Got any recommendations regarding this project ? 
