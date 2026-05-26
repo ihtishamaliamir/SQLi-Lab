@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}Lab 3 – Column Count{% endblock %}
+{% block content %}
+<h2>Products</h2>
+<form method="GET">
+    <input type="text" name="category" placeholder="Category" value="{{ request.args.get('category', '') }}">
+    <button type="submit">Filter</button>
+</form>
+<div class="query">Query: <code>{{ query }}</code></div>
+<div class="results">
+    {% for row in results %}
+    <div class="result-card">
+        <strong>{{ row.id }}</strong> - {{ row.name }} - ${{ row.price }}
+    </div>
+    {% else %}
+    <p>No results.</p>
+    {% endfor %}
+</div>
+<p>💡 Payload: <code>' UNION SELECT NULL,NULL,NULL--</code></p>
+<pre><em>  (no error = 3 columns as there aren't any data)</em></pre>
+<script>
+    const solved = {{ solved|tojson }};
+    if (solved) {
+        markCurrentLab(3, true);
+    }
+</script>
+{% endblock %}

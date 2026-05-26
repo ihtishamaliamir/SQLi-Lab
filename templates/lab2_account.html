@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}My Account{% endblock %}
+{% block content %}
+<h2>My Account</h2>
+<p>Your username is: <strong>{{ username }}</strong></p>
+<form method="POST" action="/lab2/update-email">
+    <input type="email" name="email" placeholder="Email" value="{{ email }}">
+    <button type="submit">Update email</button>
+</form>
+{% if message %}<div class="success">{{ message }}</div>{% endif %}
+<p><a href="/lab2/logout">Log out</a></p>
+<script>
+    // If we came from login bypass, mark solved
+    const solved = {{ solved|tojson }};
+    if (solved) {
+        markCurrentLab(2, true);
+    }
+</script>
+{% endblock %}

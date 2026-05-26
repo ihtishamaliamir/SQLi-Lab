@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}Lab 5 – Retrieving Data from Other Tables{% endblock %}
+{% block content %}
+<h2>Products</h2>
+<form method="GET">
+    <input type="text" name="category" placeholder="Category" value="{{ request.args.get('category', '') }}">
+    <button type="submit">Filter</button>
+</form>
+<div class="query">Query: <code>{{ query }}</code></div>
+<div class="results">
+    {% for row in results %}
+    <div class="result-card">
+        <strong>{{ row.name }}</strong><br>
+        <span style="font-family: monospace;">{{ row.description }}</span>
+    </div>
+    {% else %}
+    <p>No results.</p>
+    {% endfor %}
+</div>
+<p><em>💡 Payload: <code>' UNION SELECT username,password FROM secret_users--</code></em></p>
+<script>
+    const solved = {{ solved|tojson }};
+    if (solved) {
+        markCurrentLab(5, true);
+    }
+</script>
+{% endblock %}

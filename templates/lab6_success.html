@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Lab 6 – Success{% endblock %}
+{% block content %}
+<h2>My Account</h2>
+<p>Your username is: <strong>{{ username }}</strong></p>
+<p>Email: demo@example.com (demo)</p>
+<p><a href="/lab6/logout">Log out</a></p>
+
+{% if username == 'administrator' %}
+<script>
+    let solvedLabs = JSON.parse(localStorage.getItem('solvedLabs') || '{}');
+    solvedLabs[6] = true;
+    localStorage.setItem('solvedLabs', JSON.stringify(solvedLabs));
+    
+    const banner = document.createElement('div');
+    banner.className = 'congrats-banner';
+    banner.style.background = '#e6fffa';
+    banner.style.borderLeft = '4px solid #28a745';
+    banner.style.padding = '15px';
+    banner.style.margin = '20px 0';
+    banner.style.borderRadius = '8px';
+    banner.innerHTML = '<strong>🎉 Congratulations, you solved the lab!</strong> <a href="/">Continue learning →</a>';
+    document.querySelector('.container').insertBefore(banner, document.querySelector('.container').firstChild);
+</script>
+{% else %}
+<p><em>Logged in as {{ username }}. To solve this lab, log in as <strong>administrator</strong>.</em></p>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}Lab 6 – Verify Credentials{% endblock %}
+{% block content %}
+<h2>Verify Extracted Credentials</h2>
+<form method="POST" action="/lab6/verify">
+    <input type="text" name="username" placeholder="Username" required>
+    <input type="password" name="password" placeholder="Password" required>
+    <button type="submit">Login</button>
+</form>
+{% if error %}<p style="color:red;">{{ error }}</p>{% endif %}
+<p><a href="/lab6">← Back to injection</a></p>
+{% endblock %}

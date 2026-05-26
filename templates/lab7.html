@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Lab 7 – Database Version (MySQL){% endblock %}
+{% block content %}
+<h2>Products</h2>
+<form method="GET">
+    <input type="text" name="category" placeholder="Category" value="{{ request.args.get('category', '') }}">
+    <button type="submit">Filter</button>
+</form>
+<div class="query">Query: <code>{{ query }}</code></div>
+{% if simulated %}
+    <div class="result-card" style="background:#e6fffa;">
+        <strong>Database version:</strong> {{ results[0][0] }}
+    </div>
+{% else %}
+    <div class="results">
+        {% for row in results %}
+        <div class="result-card">{{ row.id }} - {{ row.name }} - ${{ row.price }}</div>
+        {% endfor %}
+    </div>
+{% endif %}
+<p>💡 Payload: <code>' UNION SELECT @@version,NULL,NULL--</code></p>
+<pre><em>   (simulated for SQLite)</em></pre>
+<script>
+    const solved = {{ solved|tojson }};
+    if (solved) {
+        markCurrentLab(7, true);
+    }
+</script>
+{% endblock %}
